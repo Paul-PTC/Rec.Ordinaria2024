@@ -1,4 +1,5 @@
 ﻿using Refuerzo2024.View.Dashboard;
+using Refuerzo2024.View.Especialidades;
 using System;
 using System.Windows.Forms;
 

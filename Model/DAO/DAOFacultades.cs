@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace Refuerzo2024.Model.DAO
 {
-    internal class DAOEstudiantes : DTOEstudiantes
+    internal class DAOFacultades : DTOFacultades
     {
         //Variable con la conexión
         SqlConnection con = obtenerConexion();
 
-        public DataSet ObtenerEspecialidades()
+        public DataSet ObtenerFacultades()
         {
             try
             {
                 //Se crea la instrucción de lo que se quiere hacer
-                string query = "SELECT * FROM Especialidades";
+                string query = "SELECT * FROM Facultades";
                 //Se crea el comando de tipo Sql que recibe la instrucción y la conexión
                 SqlCommand cmd = new SqlCommand(query, con);
                 //ExecuteNonQuery se utiliza para acciones como INSERT, UPDATE, DELETE
@@ -31,7 +31,7 @@ namespace Refuerzo2024.Model.DAO
                 //Se crea el objeto según el tipo de dato a retornar
                 DataSet ds = new DataSet();
                 //Se rellena el objeto a retornar con los datos de la tabla generica
-                adp.Fill(ds, "Especialidades");
+                adp.Fill(ds, "Facultades");
                 //Se retorna el objeto
                 return ds;
             }
@@ -49,15 +49,9 @@ namespace Refuerzo2024.Model.DAO
         {
             try
             {
-                string query = "INSERT INTO Estudiantes VALUES (@param1, @param2, @param3, @param4, @param5, @param6, @param7)";
+                string query = "INSERT INTO Facultades VALUES (@param1)";
                 SqlCommand cmdInsert = new SqlCommand(query, con);
-                cmdInsert.Parameters.AddWithValue("param1", NombreEstudiante);
-                cmdInsert.Parameters.AddWithValue("param2", ApellidoEstudiante);
-                cmdInsert.Parameters.AddWithValue("param3", FechaNacimiento);
-                cmdInsert.Parameters.AddWithValue("param4", Telefono);
-                cmdInsert.Parameters.AddWithValue("param5", Correo);
-                cmdInsert.Parameters.AddWithValue("param6", Dui);
-                cmdInsert.Parameters.AddWithValue("param7", IdEspecialidad);
+                cmdInsert.Parameters.AddWithValue("param1", NombreFacultad);
                 cmdInsert.ExecuteNonQuery();
                 return true;
             }
@@ -71,44 +65,18 @@ namespace Refuerzo2024.Model.DAO
             }
         }
 
-        public DataSet ObtenerEstudiantes()
-        {
-            try
-            {
-                string query = "SELECT * FROM ViewEstudiante";
-                SqlCommand cmdObtener = new SqlCommand(query, con);
-                cmdObtener.ExecuteScalar();
-                DataSet ds = new DataSet();
-                SqlDataAdapter adp = new SqlDataAdapter(cmdObtener);
-                adp.Fill(ds, "ViewEstudiante");
-                return ds;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-            finally
-            {
-                con.Close();
-            }
-        }
+        
 
         public bool ActualizarEstudiante()
         {
             try
             {
                 //Crea la instrucción de lo que se quiere hacer
-                string query = "UPDATE Estudiantes SET nombreEstudiante = @nombreEstudiante, apellidoEstudiante = @apellidoEstudiante, fechaNacimiento  = @fechaNacimiento, telefono = @telefono, correo = @correo, dui = @dui, idEspecialidad = @idEspecialidad WHERE idEstudiante = @idEstudiante";
+                string query = "UPDATE Facultades SET nombreFacultad = @nombreEstudiante WHERE idFacultad = @idEstudiante";
                 //Crea el comando con la instrucción y la conexión
                 SqlCommand cmdUpdate = new SqlCommand(query, con);
-                cmdUpdate.Parameters.AddWithValue("nombreEstudiante", NombreEstudiante);
-                cmdUpdate.Parameters.AddWithValue("apellidoEstudiante", ApellidoEstudiante);
-                cmdUpdate.Parameters.AddWithValue("fechaNacimiento", FechaNacimiento);
-                cmdUpdate.Parameters.AddWithValue("telefono", Telefono);
-                cmdUpdate.Parameters.AddWithValue("correo", Correo);
-                cmdUpdate.Parameters.AddWithValue("dui", Dui);
-                cmdUpdate.Parameters.AddWithValue("idEspecialidad", IdEspecialidad);
-                cmdUpdate.Parameters.AddWithValue("idEstudiante", IdEstudiante);
+                cmdUpdate.Parameters.AddWithValue("nombreEstudiante", NombreFacultad);
+                cmdUpdate.Parameters.AddWithValue("idEstudiante", IdFacultad);
                 //Ejecuta la instrucciones
                 cmdUpdate.ExecuteNonQuery();
                 return true;
@@ -124,9 +92,9 @@ namespace Refuerzo2024.Model.DAO
         {
             try
             {
-                string query = "DELETE FROM Estudiantes WHERE idEstudiante = @param1";
+                string query = "DELETE FROM Estudiantes WHERE idFacultad = @param1";
                 SqlCommand cmdDelete = new SqlCommand (query, con);
-                cmdDelete.Parameters.AddWithValue("param1", IdEstudiante);
+                cmdDelete.Parameters.AddWithValue("param1", IdFacultad);
                 cmdDelete.ExecuteNonQuery();
                 return true;
             }
@@ -144,11 +112,10 @@ namespace Refuerzo2024.Model.DAO
         {
             try
             {
-                string query = "SELECT * FROM ViewEstudiante WHERE nombreEstudiante LIKE @param1 OR idEstudiante LIKE @param2 OR dui LIKE @param3";
+                string query = "SELECT * FROM Facultades WHERE nombreFacultad LIKE @param1 OR idFacultad LIKE @param2";
                 SqlCommand cmdObtener = new SqlCommand(query, con);
                 cmdObtener.Parameters.AddWithValue("param1", "%" + valor + "%");
                 cmdObtener.Parameters.AddWithValue("param2", "%" + valor + "%");
-                cmdObtener.Parameters.AddWithValue("param3", "%" + valor + "%");
                 cmdObtener.ExecuteScalar();
                 DataSet ds = new DataSet();
                 SqlDataAdapter adp = new SqlDataAdapter(cmdObtener);

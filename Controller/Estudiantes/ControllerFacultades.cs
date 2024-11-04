@@ -12,16 +12,16 @@ namespace Refuerzo2024.Controller.Estudiantes
 {
     internal class ControllerEstudiante
     {
-        ViewEstudiantes objEstudiantes;
+        ViewEspecialidad objEstudiantes;
 
-        public ControllerEstudiante(ViewEstudiantes objEstudiantes)
+        public ControllerEstudiante(ViewEspecialidad objEstudiantes)
         {
             this.objEstudiantes = objEstudiantes;
             //Manejar eventos que surjan en la vista
             objEstudiantes.Load += new EventHandler(CargaInicial);
             objEstudiantes.btnAgregar.Click += new EventHandler(RegistrarEstudiante);
             objEstudiantes.dgvEstudiantes.CellClick += new DataGridViewCellEventHandler(SeleccionarDato);
-            objEstudiantes.btnActualizar.Click += new EventHandler(ActualizarEstudiante);
+            objEstudiantes.btnLimpiar.Click += new EventHandler(ActualizarEstudiante);
             objEstudiantes.btnEliminar.Click += new EventHandler(EliminarEstudiante);
             objEstudiantes.btnBuscar.Click += new EventHandler(BuscarEstudiante);
         }
@@ -38,7 +38,7 @@ namespace Refuerzo2024.Controller.Estudiantes
             objEstudiantes.txtTelefono.Text = objEstudiantes.dgvEstudiantes[4, pos].Value.ToString();
             objEstudiantes.txtCorreo.Text = objEstudiantes.dgvEstudiantes[5, pos].Value.ToString();
             objEstudiantes.txtDocumento.Text = objEstudiantes.dgvEstudiantes[6, pos].Value.ToString();
-            objEstudiantes.cmbEspecialidad.Text = objEstudiantes.dgvEstudiantes[7, pos].Value.ToString();
+            objEstudiantes.cmbFacultad.Text = objEstudiantes.dgvEstudiantes[7, pos].Value.ToString();
         }
 
         public void CargaInicial(object sender, EventArgs e)
@@ -50,21 +50,21 @@ namespace Refuerzo2024.Controller.Estudiantes
         private void LlenarComboEspecialidades()
         {
             //Se crea objeto del DAOEstudiantes para accesar a todos los metodos contenidos en la clase.
-            DAOEstudiantes obj = new DAOEstudiantes();
+            DAOFacultades obj = new DAOFacultades();
             //Se crea un DataSet que almacenará los valores que retorne el metodo.
             DataSet ds = obj.ObtenerEspecialidades();
             //Llenamos el combobox
-            objEstudiantes.cmbEspecialidad.DataSource = ds.Tables["Especialidades"];
+            objEstudiantes.cmbFacultad.DataSource = ds.Tables["Especialidades"];
             //Se indica que campo se mostrará al usuario
-            objEstudiantes.cmbEspecialidad.DisplayMember = "nombreEspecialidad";
+            objEstudiantes.cmbFacultad.DisplayMember = "nombreEspecialidad";
             //Se indica que valor será seleccionado dependiendo de lo que elija el usuario
-            objEstudiantes.cmbEspecialidad.ValueMember = "idEspecialidad";
+            objEstudiantes.cmbFacultad.ValueMember = "idEspecialidad";
         }
 
         private void LlenarDataGridViewEstudiantes()
         {
             //Se crea objeto del DAOEstudiantes para accesar a todos los metodos contenidos en la clase.
-            DAOEstudiantes obj = new DAOEstudiantes();
+            DAOFacultades obj = new DAOFacultades();
             //Se crea un DataSet que almacenará los valores que retorne el metodo.
             DataSet ds = obj.ObtenerEstudiantes();
             //Llenamos el combobox
@@ -73,7 +73,7 @@ namespace Refuerzo2024.Controller.Estudiantes
 
         public void RegistrarEstudiante(object sender, EventArgs e)
         {
-            DAOEstudiantes data = new DAOEstudiantes();
+            DAOFacultades data = new DAOFacultades();
             //Guardar en los atributos del DTO todos los valores contenidos en los componentes del formulario
             data.NombreEstudiante = objEstudiantes.txtNombres.Text.Trim();
             data.ApellidoEstudiante = objEstudiantes.txtApellidos.Text.Trim();
@@ -81,7 +81,7 @@ namespace Refuerzo2024.Controller.Estudiantes
             data.Telefono = objEstudiantes.txtTelefono.Text.Trim();
             data.Correo = objEstudiantes.txtCorreo.Text.Trim();
             data.Dui = objEstudiantes.txtDocumento.Text.Trim();
-            data.IdEspecialidad = (int)objEstudiantes.cmbEspecialidad.SelectedValue;
+            data.IdEspecialidad = (int)objEstudiantes.cmbFacultad.SelectedValue;
             //Se invoca al metodo RegistrarEstudiante y se verifica si su retorno es TRUE, de ser así significa que los datos pudieron ser registrados correctamente, de lo contrario, no se pudo registrar los valores.
             if (data.RegistrarEstudiante() == true)
             {
@@ -95,7 +95,7 @@ namespace Refuerzo2024.Controller.Estudiantes
 
         public void ActualizarEstudiante(object sender, EventArgs e)
         {
-            DAOEstudiantes data = new DAOEstudiantes();
+            DAOFacultades data = new DAOFacultades();
             //Guardar en los atributos del DTO todos los valores contenidos en los componentes del formulario
             data.IdEstudiante = int.Parse(objEstudiantes.txtID.Text.Trim().ToString());
             data.NombreEstudiante = objEstudiantes.txtNombres.Text.Trim();
@@ -104,7 +104,7 @@ namespace Refuerzo2024.Controller.Estudiantes
             data.Telefono = objEstudiantes.txtTelefono.Text.Trim();
             data.Correo = objEstudiantes.txtCorreo.Text.Trim();
             data.Dui = objEstudiantes.txtDocumento.Text.Trim();
-            data.IdEspecialidad = (int)objEstudiantes.cmbEspecialidad.SelectedValue;
+            data.IdEspecialidad = (int)objEstudiantes.cmbFacultad.SelectedValue;
             if (data.ActualizarEstudiante() == true)
             {
                 MessageBox.Show("Los datos fueron actualizados correctamente", "Confirmación", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -123,7 +123,7 @@ namespace Refuerzo2024.Controller.Estudiantes
                 MessageBox.Show("Seleccione un registro", "Seleccione un valor", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }else
             {
-                DAOEstudiantes data = new DAOEstudiantes();
+                DAOFacultades data = new DAOFacultades();
                 data.IdEstudiante = int.Parse(objEstudiantes.txtID.Text);
                 if (MessageBox.Show("¿Desea eliminar el registro seleccionado?","Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
@@ -142,7 +142,7 @@ namespace Refuerzo2024.Controller.Estudiantes
 
         public void BuscarEstudiante(object sender, EventArgs e)
         {
-            DAOEstudiantes data = new DAOEstudiantes();
+            DAOFacultades data = new DAOFacultades();
             DataSet ds = data.BuscarEstudiante(objEstudiantes.txtBuscar.Text.Trim());
             objEstudiantes.dgvEstudiantes.DataSource = ds.Tables["ViewEstudiante"];
         }

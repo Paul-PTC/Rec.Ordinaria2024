@@ -1,6 +1,7 @@
 ﻿using Refuerzo2024.Model.Conexion;
 using Refuerzo2024.View.Dashboard;
-using Refuerzo2024.View.Estudiantes;
+using Refuerzo2024.View.Especialidades;
+using Refuerzo2024.View.Especialidades;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
@@ -98,7 +99,7 @@ namespace Refuerzo2024.Controller.Dashboard
 
         public void AbrirFormEstudiantes(object sender, EventArgs e)
         {
-            AbrirFormulario<ViewEstudiantes>();
+            AbrirFormulario<Especialidad>();
         }
     }
 }

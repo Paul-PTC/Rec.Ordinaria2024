@@ -9,15 +9,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Refuerzo2024.View.Estudiantes
+namespace Refuerzo2024.View.Especialidades
 {
-    public partial class ViewEstudiantes : Form
+    public partial class Especialidad : Form
     {
-        //Constructor
-        public ViewEstudiantes()
+        public Especialidad()
         {
             InitializeComponent();
-            ControllerEstudiante next = new ControllerEstudiante(this);
+            ControlerEspecialidad controlerEspecialidad = new ControlerEspecialidad(this);
         }
+
+        
     }
 }
