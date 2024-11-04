@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.dgvEstudiantes = new System.Windows.Forms.DataGridView();
@@ -92,8 +92,8 @@
             // dgvEstudiantes
             // 
             this.dgvEstudiantes.AllowUserToAddRows = false;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.dgvEstudiantes.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.dgvEstudiantes.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvEstudiantes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvEstudiantes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvEstudiantes.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -192,7 +192,7 @@
             // 
             // txtID
             // 
-            this.txtID.Location = new System.Drawing.Point(21, 125);
+            this.txtID.Location = new System.Drawing.Point(22, 125);
             this.txtID.Name = "txtID";
             this.txtID.Size = new System.Drawing.Size(112, 21);
             this.txtID.TabIndex = 0;
