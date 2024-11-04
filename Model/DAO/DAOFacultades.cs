@@ -92,7 +92,7 @@ namespace Refuerzo2024.Model.DAO
         {
             try
             {
-                string query = "DELETE FROM Estudiantes WHERE idFacultad = @param1";
+                string query = "DELETE FROM Facultades WHERE idFacultad = @param1";
                 SqlCommand cmdDelete = new SqlCommand (query, con);
                 cmdDelete.Parameters.AddWithValue("param1", IdFacultad);
                 cmdDelete.ExecuteNonQuery();
@@ -119,7 +119,7 @@ namespace Refuerzo2024.Model.DAO
                 cmdObtener.ExecuteScalar();
                 DataSet ds = new DataSet();
                 SqlDataAdapter adp = new SqlDataAdapter(cmdObtener);
-                adp.Fill(ds, "ViewEstudiante");
+                adp.Fill(ds, "Facultades");
                 return ds;
             }
             catch (Exception)
